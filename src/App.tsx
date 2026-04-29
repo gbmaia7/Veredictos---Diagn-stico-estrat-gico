@@ -51,7 +51,7 @@ const DIAGNOSIS_DATA: DiagnosisItem[] = [
     ],
     gaps: [
       'Produto para o setor privado ainda sem proposta de valor consolidada.',
-      'Necessidade de validação regulatória (ANVISA Classe III para SaMD) não mencionada na sessão.',
+      'Necessidade de validação regulatória (ANVISA Classe II para SaMD) não mencionada na sessão.',
       'Risco de adoção: fluxo de mudança da atenção primária depende de mudança de protocolo institucional.'
     ]
   },
@@ -154,7 +154,7 @@ const SWOT_DATA = {
     'Onda de hardware de retinografia de baixo custo'
   ],
   ameacas: [
-    'Regulatório ANVISA (SaMD Classe III) — longo e custoso',
+    'Regulatório ANVISA (SaMD Classe II) — longo e custoso',
     'Burocracia do setor público / paralisia do piloto',
     'Concorrentes internacionais (IDx-DR, Eyenuk)',
     'Ciclo de venda longo no setor público',
@@ -187,6 +187,15 @@ const ROADMAP_6M: RoadmapItem[] = [
     priority: 'ALTA',
     responsible: 'Gabriel + novo hire marketing',
     actions: [
+      {
+        title: 'Veredictos Vision — Prospecção B2G (OpenClaw)',
+        points: [
+          'Fase 1 (Qualificação): Score High/Medium baseado em histórico de inovação e demanda clínica.',
+          'Fase 2 (Enriquecimento): Mapeamento de contatos-chave (LinkedIn, Lattes, Cargo) via automação.',
+          'Fase 3 (Individualização): Redação de mensagens contextuais (gancho baseado em falas/posts).',
+          'Fase 4 (Abordagem): Abordagem segmentada via Dr. João (Tier A) e Digital (Tier B).'
+        ]
+      },
       { 
         title: 'Validação no mercado privado', 
         points: ['5–8 entrevistas operadoras', '3–5 entrevistas diretores médicos', 'Mapear proposta de valor (sinistralidade)'] 
