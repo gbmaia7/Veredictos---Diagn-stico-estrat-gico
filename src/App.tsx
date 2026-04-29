@@ -197,8 +197,14 @@ const ROADMAP_6M: RoadmapItem[] = [
         ]
       },
       { 
-        title: 'Validação no mercado privado', 
-        points: ['5–8 entrevistas operadoras', '3–5 entrevistas diretores médicos', 'Mapear proposta de valor (sinistralidade)'] 
+        title: 'Validação no mercado privado & ROI', 
+        points: [
+          'Finalizar Simulador de ROI Digital para apresentações comerciais.',
+          'Agendar e realizar 5–8 entrevistas com operadoras e 3–5 com diretores médicos.',
+          'Acionar Rede Vibee: Solicitar introduções mornas (warm intros) para diretores médicos de 3 operadoras Unimed.',
+          'Estratégia de "Entrevista de Especialista": Abordagem via LinkedIn focada em aprendizado sobre sinistralidade, não em venda direta.',
+          'Participar de 1 evento regional de operadoras para networking presencial.'
+        ] 
       },
       { 
         title: 'Marketing & presença digital', 
@@ -354,7 +360,139 @@ export default function App() {
     { id: 'r6m', label: 'Roadmap 6M', icon: Clock },
     { id: 'r12m', label: 'Roadmap 12M', icon: TrendingUp },
     { id: 'recs', label: 'Recomendações', icon: Briefcase },
+    { id: 'roi', label: 'Simulador ROI Seguros', icon: TrendingUp },
   ];
+
+  const PrivateMarketROI = () => {
+    const [lives, setLives] = useState(50000);
+    const [diabeticRate, setDiabeticRate] = useState(8); // 8% prevalence
+    const [screeningRate, setScreeningRate] = useState(20); // current screening
+    
+    // Constants based on PDF data/market
+    const avgTreatmentCost = 6500; // Case with complications
+    const veredictosCost = 450; // Early screening + IA
+    
+    const totalDiabetics = Math.round((lives * diabeticRate) / 100);
+    const currentlyScreened = Math.round((totalDiabetics * screeningRate) / 100);
+    const nonScreened = totalDiabetics - currentlyScreened;
+    
+    // Risk: 30% of non-screened will have complications within 12 months
+    const potentialComplications = Math.round(nonScreened * 0.15); 
+    const currentPotentialSpend = potentialComplications * avgTreatmentCost;
+    
+    // With Veredictos: increase screening to 90%
+    const newScreened = Math.round(totalDiabetics * 0.9);
+    const veredictosInvestment = newScreened * veredictosCost;
+    const complicationsAvoided = Math.round(potentialComplications * 0.7); // 70% reduction in late-stage complications
+    const savingsInTreatments = complicationsAvoided * avgTreatmentCost;
+    
+    const netReturn = savingsInTreatments - veredictosInvestment;
+
+    return (
+      <div className="space-y-8 pb-10">
+        <SectionHeading icon={TrendingUp} title="Simulador de Impacto em Sinistralidade" subtitle="Ferramenta para validação de proposta de valor em operadoras" />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1 space-y-4">
+            <div className="bg-brand-card border border-brand-border p-5 rounded-2xl">
+              <h4 className="text-[10px] font-mono font-bold text-brand-teal uppercase tracking-widest mb-6">Parâmetros da Operadora</h4>
+              
+              <div className="space-y-6">
+                <div>
+                  <label className="text-xs text-brand-text-dim block mb-2">Total de Vidas no Plano</label>
+                  <input 
+                    type="range" min="10000" max="500000" step="10000" 
+                    value={lives} onChange={(e) => setLives(parseInt(e.target.value))}
+                    className="w-full accent-brand-teal h-1 bg-brand-border rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between mt-2 font-mono text-[10px] text-brand-text">
+                    <span>10k</span>
+                    <span className="text-brand-teal font-bold">{lives.toLocaleString()} vidas</span>
+                    <span>500k</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs text-brand-text-dim block mb-2">Prevalência Diabetes/Hipertensão (%)</label>
+                  <input 
+                    type="range" min="1" max="25" step="1" 
+                    value={diabeticRate} onChange={(e) => setDiabeticRate(parseInt(e.target.value))}
+                    className="w-full accent-brand-teal h-1 bg-brand-border rounded-lg appearance-none cursor-pointer"
+                  />
+                  <div className="flex justify-between mt-2 font-mono text-[10px] text-brand-text">
+                    <span>1%</span>
+                    <span className="text-brand-teal font-bold">{diabeticRate}%</span>
+                    <span>25%</span>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-brand-teal/5 border border-brand-teal/10 rounded-xl mt-6">
+                  <p className="text-[10px] text-brand-text leading-relaxed">
+                    <span className="font-bold text-brand-teal">Target:</span> {totalDiabetics.toLocaleString()} pacientes de alto risco mapeados.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-brand-card border border-brand-border p-5 rounded-2xl">
+              <h4 className="text-[10px] font-mono font-bold text-brand-text-dim uppercase tracking-widest mb-4">Benchmark Susceptibilidade</h4>
+              <p className="text-[11px] text-brand-text-dim leading-relaxed">
+                Dados baseados no Relatório de Diagnóstico: redução de custos de <span className="text-brand-text">~R$9.5k</span> por caso tardio para <span className="text-brand-text">~R$950</span> em diagnóstico precoce.
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-2 space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-brand-card border border-brand-border p-6 rounded-2xl flex flex-col justify-between">
+                <p className="text-[10px] font-mono text-brand-red uppercase tracking-widest mb-1">Custo de Sinistralidade Atual (Est.)</p>
+                <p className="text-2xl font-bold text-brand-text">R$ {(currentPotentialSpend / 1000000).toFixed(1)}M</p>
+                <p className="text-[11px] text-brand-text-dim mt-4">Baseado em complicações oculares evitáveis não rastreadas.</p>
+              </div>
+              <div className="bg-brand-card border border-brand-border p-6 rounded-2xl flex flex-col justify-between border-brand-teal/20">
+                <p className="text-[10px] font-mono text-brand-teal uppercase tracking-widest mb-1">Impacto Veredictos (Net Savings)</p>
+                <p className="text-2xl font-bold text-brand-teal">R$ {(netReturn / 1000000).toFixed(1)}M</p>
+                <p className="text-[11px] text-brand-text-dim mt-4">Economia líquida anual após investimento em screening IA.</p>
+              </div>
+            </div>
+
+            <div className="bg-brand-card border border-brand-border p-6 rounded-2xl">
+              <h4 className="text-[10px] font-mono font-bold text-brand-teal uppercase tracking-widest mb-6">Business Case para Entrevista (M3 Task)</h4>
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center shrink-0 text-brand-teal">
+                    <ShieldAlert size={16} />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-brand-text">Risco de Sinistralidade</h5>
+                    <p className="text-xs text-brand-text-dim mt-1">Hoje, aproximadamente {potentialComplications} pacientes do seu plano correm risco de evoluir para quadros de retinopatia grave sem diagnóstico.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center shrink-0 text-brand-teal">
+                    <Target size={16} />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-brand-text">Proposta de Valor Privada</h5>
+                    <p className="text-xs text-brand-text-dim mt-1">A implementação da Veredictos Vision permite automatizar o rastreio de fundo de olho de forma obrigatória (Protocolo MS), reduzindo em 70% a necessidade de procedimentos de alta complexidade.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-brand-teal/10 flex items-center justify-center shrink-0 text-brand-teal">
+                    <CheckCircle2 size={16} />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-brand-text">Efficiency Lift</h5>
+                    <p className="text-xs text-brand-text-dim mt-1">Ponto central para o Diretor Médico: liberação de agenda de oftalmologistas cooperados para casos cirúrgicos, enquanto a IA cuida da triagem populacional.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-brand-bg pb-20 selection:bg-brand-teal/20">
@@ -653,6 +791,10 @@ export default function App() {
                   </div>
                 </div>
               </div>
+            )}
+
+            {activeTab === 'roi' && (
+              <PrivateMarketROI />
             )}
           </motion.div>
         </AnimatePresence>
