@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-bg: #0D1212;
+  --color-brand-card: #141A1A;
+  --color-brand-border: #1E2A2A;
+  --color-brand-teal: #00C4AA;
+  --color-brand-text: #E8EEEE;
+  --color-brand-text-dim: #7A9A98;
+  --color-brand-red: #FF4B4B;
+  --color-brand-yellow: #FFB800;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-bg text-brand-text font-sans selection:bg-brand-teal/30;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-brand-bg;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-brand-border rounded-full hover:bg-brand-text-dim/30 transition-colors;
+}
