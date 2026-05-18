@@ -154,7 +154,8 @@ const SWOT_DATA = {
     'Protocolo obrigatório do Ministério da Saúde para exame de fundo de olho em diabéticos/hipertensos',
     'Convergência com ecossistema Vibee Unimed: acesso a cooperados oftalmologistas e gestores',
     'Editais FAPESP e FINEP como fontes de capital não-dilutivo',
-    'Acesso a operadoras e diretores médicos via programa Vibee para validar mercado privado'
+    'Acesso a operadoras e diretores médicos via programa Vibee para validar mercado privado',
+    'Onda de hardware de retinografia de baixo custo: oportunidade de longo prazo de desenvolver retinógrafo portátil em parceria com fabricante já certificado (Veredictos licencia a IA), sem necessidade de desenvolvimento solo. Prematura para o roadmap atual — manter como visão estratégica pós-software consolidado.'
   ],
   ameacas: [
     'Regulatório ANVISA (SaMD) — processo longo e custoso, inevitável para escala nacional',
